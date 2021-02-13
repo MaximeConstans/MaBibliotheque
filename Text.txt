@@ -1,0 +1,148 @@
+//programme simulant un bibliothèque
+
+programme bibliotheque
+debut
+	avec type t_livre{
+	titre: chaine
+	nom: chaine
+	annee: entier
+	pages: entier
+	}
+
+	livre []: t_livre
+
+	type t_biblio {
+	nbibli : entier
+	livre []: t_livre
+	}
+	bibliotheque : t_biblio
+
+	choix, ind : enier
+	titre : chaine
+	procedure affichage (bibliotheque :t_biblio;)
+	procedure ajout (bibliotheque :t_biblio;)
+	procedure suppression (bibliotheque :t_biblio;)
+	fonction recherche (bibliotheque :t_biblio, titre : chaine) retourne entier
+	fonction verif ( bibliotheque: t_biblio) retourne booléen
+
+	repeter
+		afficher "1-Afficher l'ensemble des livres de la bibliothèque"
+		a la ligne
+		afficher "2- Ajouter un nouveau livre"
+		a la ligne
+		afficher "3- Supprimer un livre"
+		a la ligne
+		afficher "4-Rechercher un livre"
+		a la ligne
+		afficher "5- Quitter"
+		a la ligne
+		afficher "6- Verifier que la bibliotheque est un ensemble"
+		a la ligne
+
+		Saisir choix
+
+		selon choix faire
+			cas 1: affichage (bibliotheque )
+			cas 2: ajout (bibliotheque )
+			cas 3: suppression (bibliotheque)
+			cas 4: Afficher "Saisir le titre du livre que vous recherchez: "
+					Saisir bibliotheque.livre[].titre			
+					ind <- recherche (bibliotheque , titre)
+					si ind <0 alors
+						Afficher "Desole mais nous ne sommes pas en posseetion de ce livre."
+					sinon
+						afficher " Nous possedons ce livre, il se trouve en position numero", ind
+			cas 5:	verif( bibliotheque)
+			cas 6: "Au revoir ! "
+		tant que choix !=5
+	finfaire
+fin bibliotheque
+
+#############################################################################################################################################
+
+procedure affichage (bibliotheque :t_biblio;)
+	avec i : entier
+
+	Pour i de 0 a bibliotheque.nbibli -1 faire
+		Afficher bibliotheque.livre[].titre
+		Afficher bibliotheque.livre[].nom
+		Afficher bibliotheque.livre[].annee
+		Afficher bibliotheque.livre[].pages
+	finfaire
+fin affichage
+
+#############################################################################################################################################
+
+procedure ajout (bibliotheque :t_biblio;)
+	si n<MAX alors
+		saisir bibliotheque.livre[].titre
+		saisir bibliotheque.livre[].nom
+		saisir bibliotheque.livre[].annee
+		saisir bibliotheque.livre[].pages
+	sinon
+		Afficher "La bibliothèque est pleine nous ne pouvons pas y ajouter un nouveau livre."
+	finsi
+	bibliotheque.nbibli<-bibliotheque.nbibli+1
+fin ajout
+
+#############################################################################################################################################
+
+fonction recherche (bibliotheque :t_biblio, titre : chaine) retourne entier
+	avec tab_recherche[MAX]: entier
+		 y, x, i: entier
+		 x<-0
+		 y<-0
+
+		 Pour i de 0 a bibliotheque.nbibli -1 faire
+			si bibliotheque.livre[1].titre= titre alors
+				tab_recherche[y]<-i
+				y<-y+1
+				x<-x+1
+			finsi
+		finfaire
+
+		pour i de 0 a x-1 faire
+			afficher tabrecherche[x]
+			afficher bibliotheque.livre[].nom
+		finfaire
+
+	Saisir j 
+
+	retourne j
+fin recherche
+
+#############################################################################################################################################
+
+fonction verif ( bibliotheque: t_biblio) retourne booléen
+	avec verif: booleen
+	i, j: entier
+	i<-0
+	j<-0
+	verif <- vrai
+
+	tant que verif et i!=bibliotheque.nbibli faire
+		pour j de i+1 a bibliotheque.nbibli-1 faire
+			si bibliotheque.livre[j].titre = bibliotheque.livre[i].titre alors
+				si bibliotheque.livre[j].nom = bibliotheque.livre[i].nom alors
+					si bibliotheque.livre[j].annee = bibliotheque.livre[i].annee alors
+						si bibliotheque.livre[j].pages = bibliotheque.livre[i].pages alors
+							verif <- faux
+						finsi
+					finsi
+				finsi
+			finsi
+		finfaire
+	finfaire
+fin verif
+
+#############################################################################################################################################
+
+fonction Maj(nom:chaine) retourne chaine
+	avec i: entier
+		pour i de 0 a longueur(nom)-1 faire
+			si (nom[i]>='a' et nom[i]<='z') alors
+				nom[i]<- nom[i]-'a'+'A'
+			finsi
+		finfaire
+	retourne nom
+finMaj
